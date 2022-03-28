@@ -4,6 +4,7 @@ import java.lang.Thread;
 
 public class ConsoleProgress implements Runnable {
     private static final String LOAD = "\rLoading ... ";
+    private static final String[] LOADPARTS = {"\\", "|", "/", "--"};
 
     public static void main(String[] args) throws InterruptedException {
         Thread progress = new Thread(new ConsoleProgress());
@@ -16,21 +17,7 @@ public class ConsoleProgress implements Runnable {
     public void run() {
         int count = 0;
             while (!Thread.currentThread().isInterrupted()) {
-
-                switch (count % 4) {
-                    case 0:
-                        System.out.print(LOAD + "\\");
-                        break;
-                    case 1:
-                        System.out.print(LOAD + "|");
-                        break;
-                    case 2:
-                        System.out.print(LOAD + "/");
-                        break;
-                    default:
-                        System.out.print(LOAD + "--");
-                        break;
-                }
+                System.out.print(LOAD + LOADPARTS[count % 4]);
                 count++;
                 try {
                     Thread.sleep(500);
