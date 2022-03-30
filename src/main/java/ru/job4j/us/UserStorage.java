@@ -34,7 +34,7 @@ public class UserStorage {
     }
 
     public synchronized User getUser(int id) {
-        return store.get(id);
+        return new User(store.get(id).getId(), store.get(id).getAmount());
     }
 
 }
