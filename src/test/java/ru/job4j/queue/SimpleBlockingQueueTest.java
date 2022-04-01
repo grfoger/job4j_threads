@@ -7,18 +7,31 @@ public class SimpleBlockingQueueTest {
 
     @Test
     public void threadTest() throws InterruptedException {
+
         SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>(5);
         Thread producer = new Thread(() -> {
-            queue.offer(1);
-            queue.offer(2);
-            queue.offer(3);
-            queue.offer(4);
+
+            try {
+                queue.offer(1);
+                queue.offer(2);
+                queue.offer(3);
+                queue.offer(4);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         });
         Thread consumer = new Thread(() -> {
-            Assert.assertEquals(queue.poll(), Integer.valueOf(1));
-            Assert.assertEquals(queue.poll(), Integer.valueOf(2));
-            Assert.assertEquals(queue.poll(), Integer.valueOf(3));
+            try {
+                Assert.assertEquals(queue.poll(), Integer.valueOf(1));
+                Assert.assertEquals(queue.poll(), Integer.valueOf(2));
+                Assert.assertEquals(queue.poll(), Integer.valueOf(3));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         });
+
         producer.start();
         producer.join();
         consumer.start();
