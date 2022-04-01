@@ -29,7 +29,7 @@ public class SingleLockList<T> implements Iterable<T> {
     }
 
     private List<T> copy(List<T> list) {
-        return (List<T>) new ArrayList<>(list).clone();
+        return new ArrayList<>(list);
     }
 
     @Override
