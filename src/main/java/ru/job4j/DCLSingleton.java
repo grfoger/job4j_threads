@@ -1,4 +1,4 @@
-package ru.job4j.cache;
+package ru.job4j;
 
 public final class DCLSingleton {
 
