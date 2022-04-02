@@ -10,6 +10,7 @@ import java.util.Queue;
 public class SimpleBlockingQueue<T> {
 
     private int capacity;
+    private boolean isEmpty;
 
     public SimpleBlockingQueue(int capacity) {
         this.capacity = capacity;
@@ -17,6 +18,10 @@ public class SimpleBlockingQueue<T> {
 
     @GuardedBy("this")
     private final Queue<T> queue = new LinkedList<>();
+
+    public boolean isEmpty() {
+        return queue.isEmpty();
+    }
 
     public synchronized void offer(T value) throws InterruptedException {
         while (queue.size() == capacity) {
