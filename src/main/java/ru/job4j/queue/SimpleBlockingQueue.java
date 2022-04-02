@@ -9,15 +9,14 @@ import java.util.Queue;
 @ThreadSafe
 public class SimpleBlockingQueue<T> {
 
+    @GuardedBy("this")
+    private final Queue<T> queue = new LinkedList<>();
+
     private int capacity;
-    private boolean isEmpty;
 
     public SimpleBlockingQueue(int capacity) {
         this.capacity = capacity;
     }
-
-    @GuardedBy("this")
-    private final Queue<T> queue = new LinkedList<>();
 
     public boolean isEmpty() {
         return queue.isEmpty();
