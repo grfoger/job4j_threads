@@ -7,8 +7,7 @@ public class Cache {
     private final Map<Integer, Base> memory = new ConcurrentHashMap<>();
 
     public boolean add(Base model) {
-        /* TODO impl */
-        return false;
+        return memory.putIfAbsent(model.getId(), model) == null;
     }
 
     public boolean update(Base model) {
@@ -17,6 +16,6 @@ public class Cache {
     }
 
     public void delete(Base model) {
-        /* TODO impl */
+       memory.remove(model.getId(), model);
     }
 }
