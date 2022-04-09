@@ -32,9 +32,16 @@ public class CacheTest {
         Base model2 = new Base(2, 1);
         Base model3 = new Base(3, 1);
         Assert.assertTrue(cache.add(model1));
-        model1.setName("один");
-        Assert.assertTrue(cache.update(model1));
-        model1.setName("два");
-        Assert.assertTrue(cache.update(model1));
+        Assert.assertTrue(cache.add(model2));
+        Assert.assertTrue(cache.add(model3));
     }
+
+    @Test
+    public void whenAddAndDelete() {
+        Cache cache = new Cache();
+        Base model1 = new Base(1, 1);
+        Assert.assertTrue(cache.add(model1));
+        cache.delete(model1);
+    }
+
 }
