@@ -12,23 +12,21 @@ public class ThreadPool {
 
     public ThreadPool() {
         for (int i = 0; i < size; i++) {
+            Thread thread = null;
             try {
-                Thread thread = new Thread(tasks.poll());
+                thread = new Thread(tasks.poll());
                 threads.add(thread);
                 thread.start();
             } catch (InterruptedException e) {
+                thread.interrupt();
                 e.printStackTrace();
             }
 
         }
     }
 
-    public void work(Runnable job) {
-        try {
+    public void work(Runnable job) throws InterruptedException {
             tasks.offer(job);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public void shutdown() {
