@@ -13,7 +13,7 @@ public class CacheTest {
         model1.setName("один");
         Assert.assertTrue(cache.update(model1));
         model1.setName("два");
-        Assert.assertTrue(cache.update(model1));
+        Assert.assertTrue(cache.update(cache.get(model1.getId())));
         Assert.assertEquals(3, cache.get(model1.getId()).getVersion());
     }
 
