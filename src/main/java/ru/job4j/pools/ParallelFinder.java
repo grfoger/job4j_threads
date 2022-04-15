@@ -5,21 +5,15 @@ import java.util.concurrent.RecursiveTask;
 public class ParallelFinder<T> extends RecursiveTask<Integer> {
 
     private final T[] array;
+    private final int from;
+    private final int to;
+    private final T obj;
 
-    public ParallelFinder(T[] array) {
+    public ParallelFinder(T[] array, int from, int to, T obj) {
         this.array = array;
-    }
-
-    public int find(T[] array, T obj) {
-        return find(array, 0, array.length, obj);
-    }
-
-    private int find(T[] array, int from, int to, T obj) {
-        if (from == to) {
-            return obj.equals(array[from]) ? from : -1;
-        }
-        int mid = (from + to) / 2;
-        return merge(find(array, from, mid, obj), find(array, mid + 1, to, obj));
+        this.from = from;
+        this.to = to;
+        this.obj = obj;
     }
 
     private int merge(int leftIndex, int rightIndex) {
@@ -28,6 +22,23 @@ public class ParallelFinder<T> extends RecursiveTask<Integer> {
 
     @Override
     protected Integer compute() {
-        return 0;
+        if (array.length <= 10) {
+            for (int i = 0; i < array.length; i++) {
+                if (obj.equals(array[i])) {
+                    return i;
+                }
+            }
+        }
+        if (from == to) {
+            return obj.equals(array[from]) ? from : -1;
+        }
+        int mid = (from + to) / 2;
+        ParallelFinder<T> leftFind = new ParallelFinder<>(array, from, mid, obj);
+        ParallelFinder<T> rightFind = new ParallelFinder<>(array, mid + 1, to, obj);
+        leftFind.fork();
+        rightFind.fork();
+        int left = leftFind.join();
+        int right = rightFind.join();
+        return merge(left, right);
     }
 }
