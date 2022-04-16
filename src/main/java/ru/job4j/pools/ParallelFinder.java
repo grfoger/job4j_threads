@@ -18,7 +18,7 @@ public class ParallelFinder<T> extends RecursiveTask<Integer> {
     }
 
     private int checkLoop() {
-        for (int i = 0; i <= to - from; i++) {
+        for (int i = from; i <= to; i++) {
             if (obj.equals(array[i])) {
                 return i;
             }
